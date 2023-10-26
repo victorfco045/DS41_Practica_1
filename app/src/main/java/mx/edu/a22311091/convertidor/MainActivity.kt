@@ -12,21 +12,22 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    private var temperatura: String = ""
     private var selectedoption: Int = 0
-
+    private var result :Double = 0.0
+    private var value: String = ""
+    private lateinit var total: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val resultado = findViewById<TextView>(R.id.textView)
         val option = findViewById<Spinner>(R.id.spinner)
         val temp = findViewById<EditText>(R.id.editTextNumberDecimal)
+        total = findViewById(R.id.result)
         val button = findViewById<Button>(R.id.button)
 
         button.setOnClickListener{
 
-            temperatura = temp.text.toString()
+            value = temp.text.toString()
 
             conversion(selectedoption)
         }
@@ -41,8 +42,8 @@ class MainActivity : AppCompatActivity() {
 
             option.onItemSelectedListener = object :
                 AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    TODO("Not yet implemented")
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
+                    selectedoption = position
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -56,21 +57,38 @@ class MainActivity : AppCompatActivity() {
         when(option){
 
             0-> {
-                //TODO Tarea: traer las formulas fisicas para convertir las temperaturas
+                // °F = (°C × 9/5) + 32
+                result = (value.toDouble() * 9/5 + 32)
+                total.text = result.toString()
             }
-            0-> {
+            1-> {
+                //K=°C + 273.15
+                result = (value.toDouble() + 273.15)
+                total.text = result.toString()
 
             }
-            0-> {
+            2-> {
+                //°C=(°F−32) ×5/9
+                result = (value.toDouble() - 32) * 5/9
+                total.text = result.toString()
 
             }
-            0-> {
+            3-> {
+                //K=(°F−32) × 5/ 9 + 273.15
+                result = (value.toDouble() -32)*5/9 + 273.15
+                total.text = result.toString()
+
 
             }
-            0-> {
-
+            4-> {
+                //°C=K−273.15
+                result = (value.toDouble() - 273.15)
+                total.text = result.toString()
             }
-            0-> {
+            5-> {
+                //°F=(K−273.15) × 9/5+32
+                result = (value.toDouble() - 273.15) * 9/5+32
+                total.text = result.toString()
 
             }
 
